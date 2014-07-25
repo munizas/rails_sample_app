@@ -1,11 +1,38 @@
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  new Highcharts.Chart({
+	  chart: {
+		  renderTo: "weight_chart"
+	  },
+	  title: {
+		  text: "Weight by Day"
+	  },
+	  xAxis: {
+		  type: "datetime"
+	  },
+	  yAxis: {
+		  title: {
+			  text: "Weight"
+		  }
+	  },
+	  series: [{
+		  data: [1, 2, 5, 7, 3]
+	  }]
+  });	
+});
+</script>
+
 <% if signed_in? %>
   <div class="row">
     <aside class="span4">
       <section>
         <%= render 'shared/user_info' %>
       </section>
+	  
+	  <div id="weight_chart" style="width:560px; height:300px;"></div>
+	  
       <section>
-        <%= render 'shared/micropost_form' %>
+        <%= render 'shared/weigh_in_form' %>
       </section>
     </aside>
 	<div class="span8">

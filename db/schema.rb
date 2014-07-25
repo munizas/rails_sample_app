@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703045613) do
+ActiveRecord::Schema.define(version: 20140718040512) do
 
   create_table "microposts", force: true do |t|
     t.string   "content"
@@ -34,5 +34,14 @@ ActiveRecord::Schema.define(version: 20140703045613) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+
+  create_table "weigh_ins", force: true do |t|
+    t.date     "day"
+    t.float    "weight"
+    t.float    "percent_body_fat"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
