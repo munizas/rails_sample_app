@@ -3,8 +3,15 @@ class WeighInsController < ApplicationController
   end
   
   def create
-    @mweigh_in = current_user.weigh_ins.build(weigh_in_params)
-    if @mweigh_in.save
+    @weigh_in = current_user.weigh_ins.build(weigh_in_params)
+    w = WeighIn.find_by(user_id: @weigh_in.user_id, day: @weigh_in.day)
+    if not w.nil?
+      w.weight = @weigh_in.weight
+      w.percent_body_fat = @weigh_in.percent_body_fat
+      w.save
+      flash[:success] = "WeighIn updated!"
+      redirect_to root_url
+    elsif @weigh_in.save
       flash[:success] = "WeighIn created!"
       redirect_to root_url
     else
