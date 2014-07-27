@@ -1,37 +1,44 @@
 <script type="text/javascript" charset="utf-8">
-$(function() {
-  new Highcharts.Chart({
-	  chart: {
-		  renderTo: "weight_chart"
-	  },
-	  title: {
-		  text: "Weight by Day"
-	  },
-	  xAxis: {
-		  type: "datetime"
-	  },
-	  yAxis: {
-		  title: {
-			  text: "Weight"
-		  }
-	  },
-	  tooltip: {
-		  formatter: function() {
-			  return Highcharts.dateFormat("%B %e, %Y", this.x) + ": " + Highcharts.numberFormat(this.y, 1);
-		  }
-	  },
-	  series: [{
-		  name: "Weight",
-		  pointInterval: <%= 1.day * 1000 %>,
-		  pointStart: <%= 3.weeks.ago.to_i * 1000 %>,
-		  data: <%= (3.weeks.ago.to_date..Date.today).map { |date| WeighIn.weight_on(date, @current_user_id).to_f }.inspect %>
-	  }, {
-		  name: "% Body Fat",
-		  pointInterval: <%= 1.day * 1000 %>,
-		  pointStart: <%= 3.weeks.ago.to_i * 1000 %>,
-		  data: <%= (3.weeks.ago.to_date..Date.today).map { |date| WeighIn.percent_body_fat_on(date, @current_user_id).to_f }.inspect %>
-	  }]
-  });	
+function reloadChart() {
+    new Highcharts.Chart({
+  	  chart: {
+  		  renderTo: "weight_chart"
+  	  },
+  	  title: {
+  		  text: "Weight by Day"
+  	  },
+  	  xAxis: {
+  		  type: "datetime"
+  	  },
+  	  yAxis: {
+  		  title: {
+  			  text: "Weight"
+  		  }
+  	  },
+  	  tooltip: {
+  		  formatter: function() {
+  			  return Highcharts.dateFormat("%B %e, %Y", this.x) + ": " + Highcharts.numberFormat(this.y, 1);
+  		  }
+  	  },
+  	  series: [{
+  		  name: "Weight",
+  		  pointInterval: <%= 1.day * 1000 %>,
+  		  pointStart: <%= @start_date.to_time.to_i * 1000 %>,
+  		  data: <%= (@start_date..@end_date).map { |date| WeighIn.weight_on(date, @current_user_id).to_f }.inspect %>
+  	  }, {
+  		  name: "% Body Fat",
+  		  pointInterval: <%= 1.day * 1000 %>,
+  		  pointStart: <%= @start_date.to_time.to_i * 1000 %>,
+  		  data: <%= (@start_date..@end_date).map { |date| WeighIn.percent_body_fat_on(date, @current_user_id).to_f }.inspect %>
+  	  }]
+    });	
+}
+	
+function homeReload() {
+  window.document.location.href = '/?start_date=' + document.getElementById("start_date").value + '&end_date=' + document.getElementById("end_date").value;
+}
+$(function() {	
+  reloadChart();
 });
 </script>
 
@@ -42,6 +49,9 @@ $(function() {
         <%= render 'shared/user_info' %>
       </section>
 	  
+	  <input id="start_date" name="start_date" type="text" value=<%= @start_date %>>
+	  <input id="end_date" name="end_date" type="text" value=<%= @end_date %>>
+	  <button type="button" onclick="homeReload()">Reload Chart</button>
 	  <div id="weight_chart" style="width:560px; height:300px;"></div>
 	  
       <section>
