@@ -2,10 +2,11 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag "application", media: "all",
+    <%= stylesheet_link_tag "application", "jquery-ui", media: "all",
                                            "data-turbolinks-track" => true %>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-	<%= javascript_include_tag "jquery-1.11.1.min", "rails", "highcharts" %>
+	<%= javascript_include_tag "jquery-1.11.1.min", "jquery-ui.min", "rails", "highcharts" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
   </head>

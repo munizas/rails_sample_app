@@ -15,3 +15,9 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+ $(function() {
+$( "#weigh_in_day" ).datepicker({
+	dateFormat: 'yy-mm-dd'
+});
+});
