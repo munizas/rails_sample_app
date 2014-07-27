@@ -22,6 +22,6 @@ class WeighInsController < ApplicationController
   private
 
     def weigh_in_params
-      params.require(:weigh_in).permit(:day, :weight, :percent_body_fat)
+      params.require(:weigh_in).permit(:day, :weight, :percent_body_fat, :note)
     end
 end

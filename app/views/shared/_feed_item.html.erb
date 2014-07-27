@@ -3,7 +3,13 @@
   <span class="user">
     <%= link_to feed_item.user.name, feed_item.user %>
   </span>
-  <span class="content">Day: <%= feed_item.day %>, Weight: <%= feed_item.weight %>, Body Fat: <%= feed_item.percent_body_fat %>%</span>
+  <span class="content">Day: <%= feed_item.day %>, Weight: <%= feed_item.weight %></span>
+  <% if not feed_item.percent_body_fat.nil? %>
+    <span class="content">% body fat: <%= feed_item.percent_body_fat %></span>
+  <% end %>
+  <% if not feed_item.note.nil? and feed_item.note.length > 0 %>
+    <span class="content">Note: <%= feed_item.note %></span>
+  <% end %>
   <span class="timestamp">
     Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
   </span>

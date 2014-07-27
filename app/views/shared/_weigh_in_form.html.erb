@@ -1,10 +1,14 @@
 <%= form_for(@weigh_in) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  Date: <%= Date.today %>
   <div class="field">
+	<%= f.label :day %>
 	<%= f.text_field :day %>
+	<%= f.label :weight %>
     <%= f.text_field :weight, placeholder: "enter weight...(required)" %>
+	<%= f.label :percent_body_fat %>
 	<%= f.text_field :percent_body_fat, placeholder: "enter % body fat...(optional)" %>
+	<%= f.label :note %>
+	<%= f.text_area :note, placeholder: "enter note...(optional)" %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
 <% end %>
